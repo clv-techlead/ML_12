@@ -1,11 +1,11 @@
-<<<<<<< HEAD
+
 <h1 style="border-bottom:none;">ML_12 TTC Streetcar Delays Classification Project Proposal
 <br>
 <br>
 
 ## Project Purpose & Overview
 
-<<<<<<< HEAD
+
 
 This project develops a machine learning classification model to predict Toronto Transit Commission (TTC) streetcar incident types using historical delay data from 2014 to 2025. By analyzing patterns in route, time of day, delay duration, and location, we aim to transform reactive incident management into proactive, data-driven operations.
 
