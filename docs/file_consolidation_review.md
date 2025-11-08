@@ -3,7 +3,7 @@
 
 **Reviewer:** Member 4 <br>
 **Date:** 11/8/2025 <br>
-**Branch Tested:** <br>
+**Branch Tested:** consolidation-review <br>
 **File reviewed:** models/model.ipynb <br>
 
 
@@ -26,7 +26,7 @@
 - Each year (2014 - 2024) was correctly added and merged 
 - Data appears complete for years with data files with 12 months of data 
 - Fairly fast processing time: 45.6 secs (may be faster with better internet speed)
-- Output has  rows and  columns
+- Output has 93,275 rows and 11 columns
 
 ### Issues Encountered
 **Incorrect file path**
@@ -78,7 +78,7 @@ _ **Member 1:** Please make these changes so that Member 2 can start EDA by Sund
 
 ## Review Status
 
-###Approved with required changes [x]
+### Approved with required changes [x]
 The code logic works well! Once you fix the Issues flagged above, it is good to merge.
 
 ## Notes
