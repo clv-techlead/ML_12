@@ -76,11 +76,9 @@ except ImportError:
 _ **Member 1:** Please make these changes so that Member 2 can start EDA by Sunday with clean data.
 
 
----
-
 ## Review Status
 
-**Approved with required changes [x]**
+###Approved with required changes [x]
 The code logic works well! Once you fix the Issues flagged above, it is good to merge.
 
 ## Notes
