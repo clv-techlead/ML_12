@@ -1,12 +1,12 @@
 
 # Review of Member 1's Data Consolidation
 
-**Reviewer:** Member 4
-**Date:** 11/8/2025
-**Branch Tested:** 
-**File reviewed:** models/model.ipynb
+**Reviewer:** Member 4 <br>
+**Date:** 11/8/2025 <br>
+**Branch Tested:** <br>
+**File reviewed:** models/model.ipynb <br>
 
----
+
 
 ## Testing Steps
 - Created a branch containing models/model.ipynb
@@ -64,7 +64,7 @@ except ImportError:
 ### Importnt - Action Needed
 **Data Cleaning** 
 
-**⚠️ I did NOT check if data needs cleaning. This is critical!**
+**Note: I did NOT check if data needs cleaning. This is critical!**
 
 **Questions for Member 1 or Member 2:**
 - Are there missing values? How should we handle them?
