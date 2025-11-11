@@ -3,8 +3,8 @@ Rough Presentation Outline
 
 
 ### Title Slide
-Predictive Incident Classification for the TTC Streetcar Operations
-From Reactive Response to Proactive Management
+Predictive Incident Classification for the TTC Streetcar Operations <br>
+From Reactive Response to Proactive Management <br>
 Member list and roles
 
 ### Slide 2: The Problem & Business Context
@@ -12,7 +12,7 @@ Member list and roles
 ### Slide 3: Data & Our Approach/Methodology Overview
 Our Soolution: ML Classification
 The Data
-Key features
+Key features <br>
 
 Appraoch:
 Data Consolidation
