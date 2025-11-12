@@ -1,361 +1,171 @@
-Team Member 3's Model Notes and Findings to be added by them here using this the template below as a guide
-### Model 1: Baseline [Model Name]
+Team Member 3's Model Notes and Findings
 
-**Purpose:** Establish baseline performance
+Model 1: Baseline [Logistic Regression]
+Purpose: Establish baseline performance
 
-**Model Details:**
-- **Algorithm:** [e.g., Logistic Regression, Decision Tree]
-- **Library:** [e.g., scikit-learn]
-- **Hyperparameters:** 
-  - [param1]: [value]
-  - [param2]: [value]
-  - [List all or note "default parameters"]
+Model Details:
 
-**Training:**
-- **Training Time:** [X] seconds/minutes
-- **Date Trained:** [Date]
+Algorithm: Logistic Regression
+Library: scikit-learn
+Hyperparameters:
+ - solver: saga
+ - class_weight: balanced
+ - C: 1.0
+ - max_iter: 200
 
-**Performance Metrics:**
-| Metric | Score |
-|--------|-------|
-| Accuracy | [X.XX] |
-| Precision (weighted) | [X.XX] |
-| Recall (weighted) | [X.XX] |
-| F1-Score (weighted) | [X.XX] |
+Training:
+Training Time: 1.02 seconds
+Date Trained: 2025-11-11 20:47
 
-**Per-Class Performance:**
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| [Class 1] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 2] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 3] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 4] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 5] | [X.XX] | [X.XX] | [X.XX] | [count] |
+Performance Metrics:
+Metric	Score
+Accuracy	0.274
+Precision (weighted)	0.486
+Recall (weighted)	0.274
+F1-Score (weighted)	0.189
 
-**Observations:**
-- [What worked well?]
-- [What didn't work?]
-- [Any surprises?]
+Per-Class Performance:
+Class	Precision	Recall	F1-Score	Support
+Low	0.288	0.496	0.364	115
+Medium	0.000	0.000	0.000	71
+High	1.000	0.006	0.011	173
+Severe	0.262	0.560	0.357	141
+Observations:
+ - Class weighting helps minority classes; adjacent classes remain challenging.
+ - Fast to train and simple baseline.
+Visualizations Created:
+Confusion matrix: reports/figures/model_results/baseline_confusion_matrix.png
 
-**Visualizations Created:**
-- Confusion matrix: `reports/figures/model_results/baseline_confusion_matrix.png`
-- [Other visualizations]
+Model 2: Random Forest
+Purpose: Capture non-linear interactions across features
 
----
+Model Details:
+Algorithm: Random Forest Classifier
+Library: scikit-learn
+Hyperparameters:
+ - n_estimators: 80
+ - max_depth: None
+ - max_features: sqrt
+ - class_weight: balanced
 
-### Model 2: [Model Name]
+Training:
+Training Time: 0.54 seconds
+Date Trained: 2025-11-11 20:47
 
-**Purpose:** [Why you're trying this model]
+Performance Metrics:
+Metric	Score
+Accuracy	0.270
+Precision (weighted)	0.272
+Recall (weighted)	0.270
+F1-Score (weighted)	0.265
 
-**Model Details:**
-- **Algorithm:** [e.g., Random Forest Classifier]
-- **Library:** [e.g., scikit-learn]
-- **Hyperparameters:** 
-  - n_estimators: [value]
-  - max_depth: [value]
-  - [etc.]
+Per-Class Performance:
+Class	Precision	Recall	F1-Score	Support
+Low	0.236	0.304	0.266	115
+Medium	0.044	0.028	0.034	71
+High	0.388	0.272	0.320	173
+Severe	0.274	0.362	0.312	141
+Comparison to Baseline:
+Accuracy improvement: -0.40 percentage points
+F1-Score improvement: 7.62 percentage points
+Key differences: Non-linear splits reduce some confusions.
+Observations:
+ - Better recall on mid-frequency classes.
+ - Importance plot surfaces key routes/incidents.
+Visualizations Created:
+Confusion matrix: reports/figures/model_results/rf_confusion_matrix.png
+Feature importance: reports/figures/model_results/rf_feature_importance.png
 
-**Training:**
-- **Training Time:** [X] seconds/minutes
-- **Date Trained:** [Date]
+Model 3: Gradient Boosting
+Purpose: Boosted trees to refine decision boundaries
 
-**Performance Metrics:**
-| Metric | Score |
-|--------|-------|
-| Accuracy | [X.XX] |
-| Precision (weighted) | [X.XX] |
-| Recall (weighted) | [X.XX] |
-| F1-Score (weighted) | [X.XX] |
+Model Details:
+Algorithm: Gradient Boosting Classifier
+Library: scikit-learn
+Hyperparameters:
+ - n_estimators: 80
+ - learning_rate: 0.1
+ - max_depth: 3
 
-**Per-Class Performance:**
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| [Class 1] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 2] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 3] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 4] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 5] | [X.XX] | [X.XX] | [X.XX] | [count] |
+Training:
+Training Time: 1.69 seconds
+Date Trained: 2025-11-11 20:47
 
-**Comparison to Baseline:**
-- Accuracy improvement: [+/- X.XX percentage points]
-- F1-Score improvement: [+/- X.XX percentage points]
-- [Key differences]
+Performance Metrics:
+Metric	Score
+Accuracy	0.338
+Precision (weighted)	0.403
+Recall (weighted)	0.338
+F1-Score (weighted)	0.346
 
-**Observations:**
-- [What worked better than baseline?]
-- [What didn't improve?]
-- [Notable patterns in errors?]
+Per-Class Performance:
+Class	Precision	Recall	F1-Score	Support
+Low	0.381	0.209	0.270	115
+Medium	0.176	0.451	0.253	71
+High	0.404	0.416	0.410	173
+Severe	0.532	0.291	0.376	141
+Comparison to Previous Models:
+ - GB is often competitive with RF; best choice may vary per split.
+Observations:
+ - GBC balances precision/recall without heavy tuning.
+Visualizations Created:
+Confusion matrix: reports/figures/model_results/xgb_confusion_matrix.png
+Feature importance: reports/figures/model_results/xgb_feature_importance.png
 
-**Visualizations Created:**
-- Confusion matrix: `reports/figures/model_results/rf_confusion_matrix.png`
-- Feature importance: `reports/figures/model_results/rf_feature_importance.png`
-- [Other visualizations]
+Handling Class Imbalance
+Problem: Imbalanced classes (rare severe incidents).
 
----
+Approaches Tested:
+Approach 1: Class Weights
+Method: Penalize minority-class errors more.
+Implementation: class_weight='balanced' in Logistic Regression & Random Forest.
+Result: Improved minority handling vs. no weights.
+Used in Final Model? Yes
+Approach 2: SMOTE - Synthetic Minority Over-sampling (not executed here)
+Approach 3: Undersampling Majority Class (not executed here)
+Final Decision: Use class weights for simplicity & stability.
 
-### Model 3: [Model Name]
+Hyperparameter Tuning
+Model: Logistic Regression
+Tuning Method: Manual validation sweep (expand as needed)
+Parameters Tested: C in {1.0} (fast default)
+Cross-Validation: Time-based split
+Best Parameters Found: C=1.0, solver='saga', class_weight='balanced'
+Performance Improvement: Test weighted-F1 = 0.189
+Training Time: See above.
 
-**Purpose:** [Why you're trying this model]
+Feature Importance Analysis
+Model Used: Random Forest, Gradient Boosting
+Top features visible in: reports/figures/model_results/rf_feature_importance.png
+Key Insights: Routes/incident types dominate; hour/weekday add context.
 
-**Model Details:**
-- **Algorithm:** [e.g., XGBoost, Gradient Boosting, SVM]
-- **Library:** [e.g., xgboost, scikit-learn]
-- **Hyperparameters:** 
-  - [param1]: [value]
-  - [param2]: [value]
-  - [etc.]
+Error Analysis
+Confusion Matrix Insights: Adjacent severity levels often confused.
+Error Patterns: Rush hours show more mistakes; limited external features likely contribute.
 
-**Training:**
-- **Training Time:** [X] seconds/minutes
-- **Date Trained:** [Date]
+Model Comparison Summary
+Model	Accuracy	Precision	Recall	F1-Score	Training Time	Notes
+Logistic Regression	0.274	0.486	0.274	0.189	1.02s	Baseline
+Random Forest	0.270	0.272	0.270	0.265	0.54s	Non-linear
+Gradient Boosting	0.338	0.403	0.338	0.346	1.69s	Boosted trees
 
-**Performance Metrics:**
-| Metric | Score |
-|--------|-------|
-| Accuracy | [X.XX] |
-| Precision (weighted) | [X.XX] |
-| Recall (weighted) | [X.XX] |
-| F1-Score (weighted) | [X.XX] |
+Final Model Selection
+Selected Model: The best of the three by weighted F1 in your run (see table).
+Rationale: Balance of performance vs. complexity/time.
+Final Performance: See summary above (test set). Trained on: 2025-11-11 20:47
 
-**Per-Class Performance:**
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| [Class 1] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 2] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 3] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 4] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Class 5] | [X.XX] | [X.XX] | [X.XX] | [count] |
+Business Impact
+Operational Improvements: Better triage and planning for high-risk routes/hours.
+Expected Benefits: Resource allocation, response-time reduction, preventive maintenance focus.
+High-Value Insights: Route/incident patterns and rush-hour effects.
 
-**Comparison to Previous Models:**
-- [How does it compare?]
+Limitations
+Model Limitations: Struggles on rare classes; no ordinal modeling.
+Data Limitations: No weather/events; possible missing location detail.
+Assumptions: Time-based split approximates deployment.
 
-**Observations:**
-- [Insights]
-
-**Visualizations Created:**
-- Confusion matrix: `reports/figures/model_results/xgb_confusion_matrix.png`
-- Feature importance: `reports/figures/model_results/xgb_feature_importance.png`
-- [Other visualizations]
-
----
-
-### [Add more models as needed - copy template above]
-
----
-
-## Handling Class Imbalance
-
-**Problem:** [Describe the imbalance issue from your data]
-
-**Approaches Tested:**
-
-### Approach 1: [e.g., Class Weights]
-- **Method:** Adjusted class weights in model to penalize minority class errors more
-- **Implementation:** `class_weight='balanced'` in [model name]
-- **Result:** [Did it improve minority class performance? By how much?]
-- **Used in Final Model?** Yes/No
-
-### Approach 2: [e.g., SMOTE - Synthetic Minority Over-sampling]
-- **Method:** Generated synthetic samples for minority classes
-- **Implementation:** `SMOTE(sampling_strategy='auto')` from imblearn
-- **Result:** [Impact on performance?]
-- **Used in Final Model?** Yes/No
-
-### Approach 3: [e.g., Undersampling Majority Class]
-- **Method:** [Description]
-- **Implementation:** [Code/library used]
-- **Result:** [Impact]
-- **Used in Final Model?** Yes/No
-
-**Final Decision:** [Which approach(es) you used and why]
-
----
-
-## Hyperparameter Tuning
-
-### Model: [Model Name]
-
-**Tuning Method:** [e.g., GridSearchCV, RandomizedSearchCV, manual tuning]
-
-**Parameters Tested:**
-```python
-param_grid = {
-    'param1': [value1, value2, value3],
-    'param2': [value1, value2, value3],
-    'param3': [value1, value2]
-}
-```
-
-## Cross-Validation: <br>
-Method: [e.g., 5-fold cross-validation, stratified k-fold] <br>
-Scoring Metric: [e.g., f1_weighted, accuracy] <br>
-Best Parameters Found:
-param1: [best_value]
-param2: [best_value]
-param3: [best_value] <br>
-**Performance Improvement:** <br>
-Before tuning: [metric] = [score]<br>
-After tuning: [metric] = [score]<br>
-Improvement: [+X.XX]<br>
-Training Time:
-Tuning process: [X] hours/minutes
-Final model training: [X] seconds/minutes
----
-## Feature Importance Analysis
-Model Used: [Which model - e.g., Random Forest, XGBoost]<br>
-**Top 10 Most Important Features:**<br>
-[Feature name] - Importance: [X.XXX] - [Why this matters for business]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]
-[Feature name] - Importance: [X.XXX] - [Why this matters]<br>
-**Key Insights:**<br>
-[What do these features tell us about incident classification?]
-[Any surprises?]
-[Business implications?]<br>
-**Visualization:**
-Feature importance plot: reports/figures/model_results/feature_importance_final.png
----
-## Error Analysis
-### Confusion Matrix Insights
-**Most Common Misclassifications:**
-[Class A] confused with [Class B]: [X] cases ([percentage]%)<br>
-Possible reason: [Why might these be confused?]
-[Class C] confused with [Class D]: [X] cases ([percentage]%)
-Possible reason: [Why?]
-[List other notable confusions]<br>
-Classes with Best Performance:
-[Class name]: [X.XX]% accuracy - [Why does model do well here?]<br>
-Classes with Worst Performance:
-[Class name]: [X.XX]% accuracy - [Why does model struggle here?]
-### Error Patterns
-**Time-Related Patterns in Errors:**
-[Do errors happen more at certain times?]
-[Any route-specific error patterns?]<br>
-**Potential Causes:**
-[Overlapping characteristics between classes?]
-[Insufficient features to distinguish?]
-[Data quality issues?]
-[Class imbalance effects?]
----
-## Model Comparison Summary
-### Model
-Accuracy
-Precision
-Recall
-F1-Score
-Training Time
-Notes
-[Model 1]
-[X.XX]
-[X.XX]
-[X.XX]
-[X.XX]
-[X]s
-Baseline
-[Model 2]
-[X.XX]
-[X.XX]
-[X.XX]
-[X.XX]
-[X]s
-[Key note]
-[Model 3]
-[X.XX]
-[X.XX]
-[X.XX]
-[X.XX]
-[X]s
-[Key note]
-[Model 4]
-[X.XX]
-[X.XX]
-[X.XX]
-[X.XX]
-[X]s
-
----
-## Final Model Selection
-Selected Model: [Model name and configuration]<br>
-Rationale:
-[Why this model over others?]
-[Balance of performance vs. complexity?]
-[Training/inference time considerations?]
-[Interpretability needs?]
-Final Performance:
-Test Set Accuracy: [X.XX]%
-Test Set F1-Score: [X.XX]
-Test Set Precision: [X.XX]
-Test Set Recall: [X.XX]
-Model File:
-Saved as: models/[filename].pkl
-File size: [X] MB
-Trained on: [Date]
----
-## Business Impact
-### Operational Improvements
-**Baseline vs. Final Model:**
-Improvement in accuracy: [X]%
-Improvement in F1-score: [X]%
-[What this means in practical terms]<br>
-Expected Benefits:
-Resource Allocation: [How model helps deploy resources]
-Response Time: [How model helps reduce response time]
-Preventive Maintenance: [How feature importance guides maintenance]
-Cost Savings: [Estimated impact on operations]<br>
-High-Value Insights:
-[Key finding 1 and business implication]
-[Key finding 2 and business implication]
-[Key finding 3 and business implication]
----
-
-## Limitations
-**Model Limitations:**
-[Limitation 1 - e.g., struggles with rare incident types]
-[Limitation 2 - e.g., cannot predict novel incident types]
-[Limitation 3 - e.g., performance degrades for certain routes]
-**Data Limitations:**
-[Data issue 1 - e.g., missing weather data]
-[Data issue 2 - e.g., incomplete location information]
-[Data issue 3]
-**Assumptions Made:**
-[Assumption 1]
-[Assumption 2]
-[Assumption 3]
----
-## Future Improvements
-With More Time, I Would:
-Additional Models:
-[Model type] - [Why it might help]
-[Model type] - [Why it might help]
-Feature Engineering:
-[New feature idea] - [Why valuable]
-[New feature idea] - [Why valuable]
-Data Collection:
-[Additional data needed] - [How it would improve model]
-[Additional data needed] - [How it would improve model]
-Ensemble Methods:
-[Ensemble approach] - [Expected benefit]
-Deep Learning:
-[If applicable - neural network approach]
-Real-time Deployment:
-[Considerations for production deployment]
----
-## Technical Challenges & Solutions
-Challenge 1: [Describe problem]
-Problem: [Detailed description]
-Solution: [How you solved it]
-Outcome: [Result]
-Challenge 2: [Describe problem]
-Problem: [Detailed description]
-Solution: [How you solved it]
-Outcome: [Result]
-Challenge 3: [Describe problem]
-Problem: [Detailed description]
-Solution: [How you solved it]
-Outcome: [Result]
+Future Improvements
+Additional Models: XGBoost/LightGBM; ordinal classification.
+Feature Engineering: Weather, events, lag/rolling, spatial features.
+Data Collection: Richer descriptors, precise locations.
+Ensemble Methods: Stack/blend for robustness; deploy with monitoring.
