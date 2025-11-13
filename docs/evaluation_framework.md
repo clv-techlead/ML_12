@@ -2,20 +2,21 @@
 **Purpose:** To assess the performance of a classification model, understand its strengths and weaknesses, and determine its suitability for addressing the business problem of transforming reactive streetcar incident management into proactive, data-driven operations for TTC. 
 
 ## I. Foundation: Defining the Problem & Goals
-    1. **Objective:** predicting TTC streetcar incident types (e.g., 'Mechanical', 'MTPU', 'General Delay', 'Held By', etc.) before they occur. 
-    2. **Business Impact:** Understand the real-world consequences of correct predictions versus different types of errors:
+    1. Objective: predicting TTC streetcar incident types (e.g., 'Mechanical', 'MTPU', 'General Delay', 'Held By', etc.) before they occur.
+    2. Business Impact: Understand the real-world consequences of correct predictions versus different types of errors:
         ◦ Value of Correct Prediction: Enables anticipation of incident types, optimization of resource allocation (maintenance crews, vehicles, personnel), improved scheduling, enhanced coordination, and ultimately, better service reliability and passenger satisfaction.
         ◦ Cost of False Positives (FP): Misclassifying an incident type (e.g., predicting 'Mechanical' when it's 'Traffic') could lead to misallocation of specialized resources or unnecessary intervention. This results in wasted resources (money, time, personnel).
         ◦ Cost of False Negatives (FN): Failing to predict an actual incident type (e.g., missing a 'Severe' delay or a critical 'Mechanical' issue) means the TTC remains reactive, leading to service disruption, prolonged delays, and negative passenger experience. This impact is critical for service reliability.
-     3.  **Critical Scenarios:** Identify specific scenarios where model performance is paramount:
+     3.  Critical Scenarios: Identify specific scenarios where model performance is paramount:
         ◦ High-Impact Incident Types: Particularly accurate prediction of major delay causes like 'Mechanical' failures, 'General Delay', 'MTPU' (presumed mechanical), and 'Held By' (external factors).
         ◦ Peak Rush Hours: Model performance during 7-9 AM and 4-6 PM on weekdays, where incidents have the highest impact on ridership and traffic.
         ◦ High-Incident Routes & Stations: Accuracy for Routes 501 Queen, 504 King, and stations like Dundas Street West and Queen Street West, which are historically prone to incidents.
         ◦ Anticipation for Proactive Response: The model's ability to provide predictions early enough to allow for proactive measures rather than reactive ones.
+        
 ## II. Core Evaluation Metrics (Member 3)
 These metrics are calculated per class and then aggregated: 
     1. Confusion Matrix: The foundational table showing True Positives (TP), True Negatives (TN), False Positives (FP), and False Negatives (FN) for each class.
-        ◦ Value: Provides a raw count of correct and incorrect predictions, offering the most granular view of model errors.
+        ◦ Value: Provides a raw count of correct and incorrect predictions, offering the most granular view of model errors. 
     2. Accuracy: (TP + TN) / (TP + TN + FP + FN)
         ◦ Value: Easy to understand. Measures overall correctness.
         ◦ Caveat: Misleading with class imbalance. A model predicting the majority class can have high accuracy but be useless.
@@ -29,11 +30,13 @@ These metrics are calculated per class and then aggregated:
         ◦ Value: Measures how many of the actual negative cases were correctly identified.
     7. Log-Loss (Cross-Entropy Loss): Measures the performance of a classification model where the prediction is a probability. It penalizes confident incorrect predictions more heavily.
         ◦ Value: Excellent for models that output probabilities, as it assesses the calibration of those probabilities. A lower score is better.
+        
     ### Visual Representation of Metrics 
       - **Confusion Matrix Heatmap** - Shows misclassification patterns at a glance 
       - **Per-Class Metrics Bar Chart** - Compare precision/recall/F1 across incident types 
       - **ROC Curves** (if applicable) - For models outputting probabilities 
       - **Precision-Recall Curves** - Especially valuable with class imbalance 
+      
 ## III. Multi-Class Aggregation Strategies (Member 3)
 For delay_bin with 'Low', 'Medium', 'High', 'Severe' categories, you need to aggregate per-class metrics:
     1. Macro Average: Calculate the metric independently for each class, then take the unweighted average. Treats all classes equally, regardless of their support.
@@ -65,6 +68,7 @@ Given the expected class imbalance in incident types:
         ◦ What common characteristics do False Positives or False Negatives for critical incident types (e.g., 'Mechanical', 'Severe' delays) share?
         ◦ Are there specific times, locations, or external factors (e.g., extreme weather) where the model consistently struggles, indicating areas for future feature engineering or data collection? 
     4. Feature Importance: Analyze which features the model relies on most for its predictions. This helps validate the insights from your EDA (e.g., if 'hour' and 'route' features are highly important) and can provide further actionable insights.
+    
 ## V. Framework for Reporting & Decision Making (Member 4)
     1. Dashboards/Visualizations: Create clear visualizations of the confusion matrix, ROC curves, and per-class metrics. Specifically highlight performance in critical scenarios (e.g., peak rush hours, high-incident routes).
     2. Comparison to Baselines: Always compare your model's performance against a simple baseline (e.g., predicting the most frequent incident type, or a rule-based system) to demonstrate the value added by the ML model.
