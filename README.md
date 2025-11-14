@@ -106,7 +106,6 @@ This project analyzes TTC streetcar service delay data spanning **2014 to 2024**
 - **93,275** total incident records
 - Comprehensive coverage across 11 years of transit operations
 <br>
-(Source: [TTC Streetcar Delay Data historical CSV files](https://open.toronto.ca/dataset/ttc-streetcar-delay-data/) )
 
 ****Key Features:****
 Based on the consolidated dataset, our data includes:
@@ -206,12 +205,18 @@ Our analysis followed a structured, milestone-driven approach moving from data c
 4. A strong positive correlation (0.85) exists between min_delay and min_gap, implying interdependence.
 
 **Visualizations:**
-[Include 3-4 key EDA charts here with captions]
 
-- Figure 1: Top 12 Incident Type Distribution
-- Figure 2: incidents by Route and Hour Heatmap 
-- Figure 3: Top 20 Routes by Incident Count
-- Figure 4: Numeric Feature Correlation Heatmap
+![Top 12 Incident Types](https://raw.githubusercontent.com/Tupay88/ML_12/main/reports/charts/eda/top12_incident_type.png)
+**Figure 1: Top 12 Incident Type Distribution**
+*The top 5 incident types account for the majority of the incidents, with Mechanical being the most frequent. This creates a class imbalance which requires a specialized modeling approach*
+
+![Incidents by Hour](https://raw.githubusercontent.com/Tupay88/ML_12/main/reports/charts/eda/incidents_by_hour.png)
+**Figure 2: Incident Frequency by Hour of Day**
+*Clear peaks during morning (5-9 AM) and evening (2-5 PM) which demonstrates strong time dependencies. This validates the importance of the "hour" feature for predictive modeling.*
+
+![Route Time Heatmap](https://raw.githubusercontent.com/Tupay88/ML_12/main/reports/charts/eda/route_time_heatmap.png)
+**Figure 3: Route and Time Incident Heatmap**
+*This heatmap provides rout-specific time-related patterns, showing which routes experience incidents at which hours.*
 
 ### Phase 3: Feature Engineering
 
@@ -307,6 +312,10 @@ To understand the relative effectiveness of different algorithms, we compared Lo
 | Random Forest (RF)     | 0.333             | 0.270    | 0.265    |
 | Logistic Regression (LogReg) | 0.291         | 0.274    | 0.189    |
 
+![Model Comparison](https://raw.githubusercontent.com/Tupay88/ML_12/main/reports/charts/model_results/model_comparison.png)
+**Figure 4: Model Performance Comparison**
+*Gradient Boosting model outperformed the other models used, achieving the highest Weighted F1-Score.* 
+
 **Key Observation:** Gradient Boosting consistently outperformed Random Forest and Logistic Regression across key metrics, establishing it as the most effective model for this classification task.
 
 ### Detailed Per-Class Performance (Non-Rush Hours)
@@ -373,12 +382,20 @@ Understanding which features most influence the model's predictions is key to de
 3. `route_slim_503` - Importance: ~0.075
 4. `route_slim_unknown` - Importance: ~0.045
 
+![Feature Importance GB](https://raw.githubusercontent.com/Tupay88/ML_12/main/reports/charts/model_results/feature_importance_gb.png)
+**Figure 5: Feature Importance (Gradient Boosting - Non Rush Hours)**
+*Hour of the day dominates as the most predictive feature, followed by specific routes(501, 503)*
+
 **Key Insights:**
 - `hour` is by far the most significant predictor, underscoring the critical influence of the time of day on incident types. This confirms findings from the EDA regarding peak incident times.
 - Specific routes, such as `route_slim_501` and `route_slim_503`, also show considerable importance. This highlights persistent issues on certain lines, validating EDA findings about high-incident routes.
 - The `route_slim_unknown` category's importance indicates that handling missing or uncategorized route information is also significant for prediction.
 
 ### Error Analysis (Gradient Boosting - Non-Rush Hours Confusion Matrix)
+
+![Confusion Matrix GB](https://raw.githubusercontent.com/Tupay88/ML_12/main/reports/charts/model_results/confusion_matrix_gb.png)
+**Figure 6: Confusion Matrix - Gradient Booster (Non-Rush Hours)**
+*The confusion matrix reveals the model's classification patterns.*
 
 Analyzing the misclassification patterns of the Gradient Boosting model during non-rush hours provides insight into its decision-making and areas for improvement.
 
@@ -671,8 +688,8 @@ ________________________________________
 Python 3.9+
 **Core Libraries:**
 Data Processing: pandas, numpy
-Machine Learning: scikit-learn, [PLACEHOLDER - xgboost? other libraries Member 3 used]
-Visualization: matplotlib, seaborn, [plotly if used]
+Machine Learning: scikit-learn, 
+Visualization: matplotlib, seaborn
 Data Loading: openpyxl (Excel files), xlrd (legacy Excel)
 Utilities: tqdm (progress bars)
 
@@ -710,7 +727,7 @@ ________________________________________
 ## XIII. Acknowledgments
 We thank the Toronto Transit Commission for making this data publicly available, enabling data-driven analysis to improve public transit operations.
 ________________________________________
-Project Timeline: [Start date] - November 14, 2025
+Project Timeline: [Start date] - November 4, 2025
 Showcase Presentation: November 15, 2025
 Repository: [GitHub URL]
 License: [If applicable]
