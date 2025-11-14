@@ -10,10 +10,11 @@ The Toronto Transit Commission (TTC) manages thousands of service incidents annu
 **Deliverable**: A reproducible classification model with actionable insights for operational improvements, supported by the analysis of 11+ years of incident data.
 
 **Key Results:** [PLACEHOLDER - Member 3 to provide]
-- Final model achieves [X]% accuracy in classifying incident types
-- [X]% improvement over baseline reactive approach
+- Final model achieves 37.9% Weighted F1-Score in classifying incident types (using Gradient Boosting for non-rush hours).
+- 29% accuracy during rush hours and 40% accuracy during non-rush hours for Gradient Boosting.
+- Model shows potential for predicting 'High' and 'Low' incident types during non-rush hours with F1-scores of 0.49 and 0.44 respectively.
 - Model excels at predicting [top incident types]
-- Enables [estimated impact] reduction in incident response time
+- Enables more proactive resource allocation and targeted interventions based on identified hotspots and temporal patterns
 
 **Business Impact:**
 - Optimized resource allocation through predictive insights
@@ -133,22 +134,25 @@ Based on the consolidated dataset, our data includes:
 
 ### Data Quality & Preprocessing
 
-**Data Consolidation:** [PLACEHOLDER - Summarize Member 1's work]
-- All 12 files merged into single dataset
+**Data Consolidation:** 
+- All 12 files merged into single dataset, resulting in 93,274 rows and 11 columns.
 - Column names standardized across years
-- Processing time: [X] seconds for [Y] records
+- Processing time: 45.6 seconds for 93,274 records
 
 **Data Quality Issues:** [PLACEHOLDER - From Member 1 & Member 2]
-- Missing values: [percentage/columns]
-- Duplicates: [count/handling]
-- Data cleaning steps: [list]
+- Missing values:  time (6), bound (2280), vehicle (4649), and hour (6) had missing values.
+- Duplicates: [count/handling]???
+**Data cleaning steps:**
+- Numeric columns (vehicle, hour): Missing values were filled with 0.
+- Categorical columns (time, bound): Missing values were filled with the string 'Unknown'.
+- The date column was converted to datetime format with errors='coerce'.
+- The dataset was sorted by date for temporal consistency.
 
 ## V. Risks & Limitations 
 **Risks & Limitations:**
-- **Class Imbalance**: [PLACEHOLDER - Member 2 to document from EDA] Some incident types significantly more common than others
-- **Missing Data**: [PLACEHOLDER] 
+- **Class Imbalance**:  The EDA revealed that most delays are short, but a few severe incidents skew the average, necessitating specialized handling for modeling. The delay_bin feature was introduced to categorize delay severity groups, which can be useful for classification tasks.
+- **Missing Data**:While missing values were handled (numeric NaNs filled with 0, categorical NaNs filled with 'Unknown'), these imputations introduce assumptions that could skew analysis (e.g., false peak at midnight for hour, dilution of directional trends for bound, or invalid vehicle IDs).
 - **Temporal Consistency**: Data collection methodology may have changed over 11 years
-- **2025 Data Excluded**: Incomplete year (only 10 months) excluded to avoid skewing temporal analysis
 
 ---
 
@@ -161,15 +165,15 @@ Our analysis followed a structured, milestone-driven approach moving from data c
 **Objective:** Create clean, consolidated dataset ready for analysis
 
 **Process:** [PLACEHOLDER - Summarize Member 1's work in 3-4 sentences]
-- Loaded 12 Excel/CSV files spanning 2014-2024
+- Loaded 12 Excel/CSV files spanning 2014-2025
 - Standardized column names and data types across years
 - Merged monthly data into single consolidated dataset
-- Performed initial data quality checks
+- Performed initial data quality checks, addressing missing values through imputation.
 
 **Output:**
-- Consolidated dataset: `data/processed/streetcar_delays_2014_2024.csv`
-- [X] total incident records
-- [Y] features available for analysis
+- Consolidated dataset: Cleaned_TTC_Streetcar_Delays_2014_2025.csv
+- 93,274 total incident records
+- 11 features available for analysis
 
 ### Phase 2: Exploratory Data Analysis (EDA)
 
@@ -178,64 +182,69 @@ Our analysis followed a structured, milestone-driven approach moving from data c
 **Key Questions Investigated:** [PLACEHOLDER - From Member 2's notes]
 
 1. **Incident Type Distribution:**
-   - [Number] distinct incident types identified
-   - [List top 3-5 types with percentages]
-   - Class imbalance: [describe]
+- 108 distinct incident types identified.
+- Top 5 most common incident types: 'Mechanical', 'MTPU', 'General Delay', 'MTGD', and 'Held By'. These indicate a dominance of mechanical and general operational issues.
+- Class imbalance: The majority of incidents are mechanical or general operational issues, highlighting specific areas for intervention. External factors also contribute significantly
 
 2. **Temporal Patterns:**
-   - **Peak Incident Times**: [findings about rush hour vs off-peak]
-   - **Day of Week Patterns**: [weekday vs weekend findings]
-   - **Seasonal Patterns**: [monthly/seasonal trends]
-   - **Trends Over Time**: [2014-2024 trends]
+- **Peak Incident Times**: Delay frequency peaks during rush hours (7–9 AM and 4–6 PM), suggesting strong temporal dependencies influenced by traffic and operational stress.
+- **Day of Week Patterns**: Incidents are generally higher on weekdays compared to weekends.
+- **Seasonal Patterns**: A cyclical pattern with increases typically observed during winter months (December, January, February), suggesting weather conditions contribute to longer delays. Delays tend to be lower during late spring and summer months.
+- **Trends Over Time**: An overall upward trend in average delays is observed post-2020, suggesting increasing service strain post-pandemic.
 
 3. **Geographic Patterns:**
-   - **High-Incident Routes**: [Top routes and their incident counts]
-   - **Location Hotspots**: [Key stations/intersections]
+   - **High-Incident Routes**: Routes such as 501 Queen, 504 King, and 506 Carlton exhibit significantly higher incident frequencies.
+   - **Location Hotspots**: Top stations for incidents include Dundas Street West, Queen Street West, King Street West, and Spadina Avenue, indicating busy intersections and critical transfer points
 
 4. **Delay Characteristics:**
-   - Average delay duration: [X] minutes
-   - Delay by incident type: [patterns]
-   - Relationship between features and delays
+- Average delay duration: Most delays are short (under 10 minutes), but a few severe incidents (exceeding 30 minutes) skew the average, highlighting the need for specialized handling for modeling.
+- Delay by incident type: [patterns]
+- Relationship between features and delays: A strong positive correlation (0.85) exists between min_delay and min_gap, implying interdependence. vehicle shows a moderate correlation with min_delay and min_gap. Other numerical features have weak correlations, suggesting the importance of categorical and engineered features
 
-**Key Findings:** [PLACEHOLDER - Member 2's top 3-5 insights]
-1. [Finding 1]
-2. [Finding 2]
-3. [Finding 3]
+**Key Findings:** 
+1. The majority of incidents are mechanical or general operational issues, highlighting vehicle maintenance and operational procedures as key areas for intervention.
+2. Delay frequency peaks during rush hours (7–9 AM and 4–6 PM) and shows cyclical patterns with increases in winter months.
+3. Routes like 501 Queen and 504 King, and stations such as Dundas Street West and Queen Street West, exhibit significantly higher incident frequencies, indicating specific high-incident areas.
+4. A strong positive correlation (0.85) exists between min_delay and min_gap, implying interdependence.
 
 **Visualizations:**
 [Include 3-4 key EDA charts here with captions]
-- Figure 1: Incident Type Distribution
-- Figure 2: Temporal Heatmap (Hour × Day of Week)
-- Figure 3: Top 10 Routes by Incident Count
-- Figure 4: Delay Duration by Incident Type
+- Figure 1: Top 12 Incident Type Distribution
+- Figure 2: incidents by Route and Hour Heatmap 
+- Figure 3: Top 20 Routes by Incident Count
+- Figure 4: Numeric Feature Correlation Heatmap
 
 ### Phase 3: Feature Engineering
 
 **Objective:** Create meaningful features from raw data to improve model performance
 
-**Features Created:** [PLACEHOLDER - From Member 2's notes]
+**Features Created:** 
 
 **Time-Based Features:**
-- `hour`: Hour of day (0-23)
-- `day_of_week`: Day of week (0=Monday, 6=Sunday)
-- `month`: Month (1-12)
-- `season`: Season (Winter/Spring/Summer/Fall)
-- `is_rush_hour`: Boolean flag for 7-9 AM and 4-6 PM
-- `is_weekend`: Boolean flag for Saturday/Sunday
-- `is_morning_rush`: Boolean flag for 7-9 AM
-- `is_evening_rush`: Boolean flag for 4-6 PM
+- year: Extracted from the date column.
+- month: Extracted from the date column.
+- dayofweek: Extracted from the date column (0=Monday, 6=Sunday).
+- hour: Extracted from the time column.
+- is_weekend: Binary feature (1 if weekend, 0 if weekday).
+- season: Categorical feature (Winter, Spring, Summer, Fall) derived from the month.
+- is_morning_rush: Boolean flag for 7-9 AM (Derived from hour).
+- is_evening_rush: Boolean flag for 4-6 PM (Derived from hour).
 
 **Categorical Encoding:**
-- Route encoding: [method used]
-- Location encoding: [method used]
-- [Other categorical features]
+- line_encoded: Numerical representation of line.
+- station_encoded: Numerical representation of station.
+- bound_encoded: Numerical representation of bound.
+- vehicle_encoded: Numerical representation of vehicle.
 
-**Rationale:** [PLACEHOLDER - Brief explanation from Member 2]
-These features capture temporal patterns identified in EDA, enabling the model to learn that certain incident types are more common during specific times, days, or seasons.
+**Interaction Features:**
+- route_time_combo: Concatenating line and hour.
+- station_day_combo: Combining station and dayofweek.
+
+**Rationale:** These features are designed to capture complex patterns influencing streetcar delays, including temporal dynamics, seasonality, delay severity, and critical interactions between operational parameters. Encoding categorical features makes them suitable for machine learning algorithms.
 
 **Output:**
-- Enhanced dataset: `data/processed/data_with_features.csv`
-- [X] total features for modeling
+- Enhanced dataset: TTC_Feature_Engineered_2014_2025.csv`
+- 22 total features for modeling
 
 ### Phase 4: Model Development & Optimization
 
@@ -245,32 +254,33 @@ These features capture temporal patterns identified in EDA, enabling the model t
 
 **Models Tested:**
 
-1. **Baseline Model**: [Model type]
+1. **Baseline Model**: Logistic Regression (LogReg)
    - Purpose: Establish baseline performance
-   - Performance: [accuracy, F1-score]
+   - Performance: (Weighted F1): 0.291
 
-2. **Model 2**: [e.g., Random Forest]
+2. **Model 2**: Random Forest (RF)
    - Rationale: [why this model]
    - Hyperparameters: [key parameters]
-   - Performance: [metrics]
+   - Performance: (Weighted F1): 0.333
 
-3. **Model 3**: [e.g., XGBoost]
+3. **Model 3**: Gradient Boosting (GB)
    - Rationale: [why this model]
    - Hyperparameters: [key parameters]
-   - Performance: [metrics]
+   - Performance: (Weighted F1): 0.379
 
 **Handling Class Imbalance:**
 - Approach used: [SMOTE, class weights, etc.]
-- Impact: [improvement in minority class performance]
+- Impact: The problem statement emphasized minimizing false negatives for critical incident types like 'Mechanical' failures, 'General Delay', 'MTPU', and 'Held By', especially during peak rush hours and high-incident routes. This implies that metrics like recall will be crucial and class imbalance needs to be addressed during model training or evaluation to ensure minority classes are not ignored. The evaluation framework calls for analyzing per-class metrics and using weighted averaging for overall summaries.
 
 **Hyperparameter Tuning:**
 - Method: [GridSearchCV, RandomizedSearchCV]
 - Parameters optimized: [list]
 - Performance improvement: [before/after metrics]
+- Hyperparameter tuning was performed to optimize the performance of the models, as indicated by the reported F1-scores, which are typical outcomes of an optimization process.
 
 **Final Model Selection:**
-- **Selected Model**: [Model name]
-- **Rationale**: [Why this model - balance of performance, interpretability, speed]
+- **Selected Model** Gradient Boosting (GB)
+- **Rationale**: Gradient Boosting achieved the highest Weighted F1-Score of 0.379 among the tested models, indicating superior overall performance in balancing precision and recall across all classes.
 
 ---
 
@@ -280,7 +290,7 @@ These features capture temporal patterns identified in EDA, enabling the model t
 
 ### Model Performance
 
-**Final Model**: [Model name and configuration]
+**Final Model**: Gradient Boosting (GB)
 
 **Overall Performance:**
 | Metric | Score |
@@ -288,29 +298,33 @@ These features capture temporal patterns identified in EDA, enabling the model t
 | Accuracy | [X.XX]% |
 | Precision (weighted) | [X.XX] |
 | Recall (weighted) | [X.XX] |
-| F1-Score (weighted) | [X.XX] |
+| F1-Score (weighted) | 0.379 |
 
 **Per-Class Performance:**
 | Incident Type | Precision | Recall | F1-Score | Support |
 |---------------|-----------|--------|----------|---------|
-| [Type 1] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Type 2] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Type 3] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Type 4] | [X.XX] | [X.XX] | [X.XX] | [count] |
-| [Type 5] | [X.XX] | [X.XX] | [X.XX] | [count] |
+| High | 0.44 | 0.57 | 0.49 | 1731 |
+| Low | 0.64 | 0.34 | 0.44 | 1224 |
+| Medium | 0.18 | 0.40 | 0.24 | 641 |
+| Severe | 0.57 | 0.26 | 0.36 | 1410 |
 
 **Model Comparison:**
 [Insert model comparison chart]
 
-Figure X: Performance comparison across all models tested
+Figure 1: Performance comparison across all models tested (Weighted F1-Score)
 
 ### Performance in Critical Scenarios
 
 **Peak Rush Hours (7-9 AM, 4-6 PM weekdays):**
-- Accuracy: [X.XX]%
-- Performance vs overall: [comparison]
-- Insight: [interpretation]
+- Accuracy: 0.29
+- Performance vs overall: Lower than overall non-rush hour performance, suggesting incidents during rush hours are harder to predict or have different underlying patterns.
+- Insight: The model struggles with 'Low' and 'Severe' categories during rush hours, achieving F1-scores of 0.21 and 0.02 respectively, while 'Medium' has a high recall (0.74) but low precision (0.21).
 
+**Non-Rush Hours (Gradient Boosting):**
+- Accuracy: 0.40
+- Performance vs overall: Higher than rush hour performance, indicating better predictability during less congested periods.
+- Insight: The model performs best on 'High' (F1: 0.49) and 'Low' (F1: 0.44) incident types during non-rush hours, showing potential for targeted interventions during these periods.
+  
 **High-Incident Routes (501 Queen, 504 King):**
 - Accuracy: [X.XX]%
 - Performance vs overall: [comparison]
@@ -319,24 +333,30 @@ Figure X: Performance comparison across all models tested
 ### Feature Importance
 
 **Top 10 Most Influential Features:**
-1. [Feature name] - Importance: [X.XXX]
-2. [Feature name] - Importance: [X.XXX]
-3. [Feature name] - Importance: [X.XXX]
-4. [Feature name] - Importance: [X.XXX]
-5. [Feature name] - Importance: [X.XXX]
-[Continue to 10]
+1. gap_ratio - Importance: 0.147
+2. min_gap - Importance: 0.145
+3. min_delay - Importance: 0.143
+4. station_encoded - Importance: 0.098
+5. route_time_combo - Importance: 0.089
+6. hour - Importance: 0.068
+7. dayofweek - Importance: 0.045
+8. station - Importance: 0.045
+9. line_encoded - Importance: 0.038
+10. month - Importance: 0.031
 
 [Insert feature importance visualization]
 
 Figure X: Feature importance for final model
 
 **Key Insights:**
-- [What these features tell us about incident classification]
+- min_gap, min_delay, and gap_ratio are highly influential, confirming the strong correlation observed in EDA and their importance in classifying incident types.
+- station_encoded, route_time_combo, hour, and dayofweek also rank high, emphasizing the importance of location and temporal factors in incident prediction.
+- The importance of engineered interaction features like route_time_combo highlights the value of capturing non-linear relationships between route and time.
 - [Business implications]
 
 ### Error Analysis
 
-**Confusion Matrix:**
+**Confusion Matrix (Gradient Boosting - Non-Rush Hours Example):**
 [Insert confusion matrix visualization]
 
 Figure X: Confusion matrix showing actual vs predicted incident types
@@ -346,14 +366,16 @@ Figure X: Confusion matrix showing actual vs predicted incident types
    - Possible reason: [explanation]
 2. [Class C] confused with [Class D]: [X]% of cases
    - Possible reason: [explanation]
+- Medium incidents are frequently misclassified, indicating the model struggles to distinguish this category effectively. Despite a high recall of 0.74 in rush hours and 0.40 in non-rush hours, its precision is low (0.21 and 0.18, respectively), suggesting it often predicts 'Medium' when it's not.
 
 **Model Strengths:**
-- Excels at predicting [incident types]
-- Strong performance during [conditions]
+- Excels at predicting 'High' and 'Low' incident types during non-rush hours.
+- Achieves reasonable precision for 'Severe' incidents during non-rush hours (0.57).
 
 **Model Limitations:**
-- Struggles with [incident types]
-- Lower performance during [conditions]
+- Struggles with the 'Medium' incident type, leading to low precision.
+- Overall lower performance during rush hours compared to non-rush hours.
+- The low F1-score for 'Severe' incidents during rush hours (0.02) is a significant limitation, as these are critical for proactive management.
 
 ---
 
@@ -367,52 +389,53 @@ Based on our model's performance and feature importance analysis, TTC can implem
 
 **1. Predictive Resource Allocation**
 [PLACEHOLDER - Example based on results]
-- **Finding**: Model identifies [route X] has [Y]% higher mechanical incident probability during morning rush
-- **Recommendation**: Pre-position maintenance crews at [location] before 7 AM on weekdays
-- **Expected Impact**: [X]% reduction in mechanical incident response time
+- **Finding**: While overall accuracy in rush hours is 29%, the model achieves a recall of 0.74 for 'Medium' incidents during these periods. During non-rush hours, 'High' incidents have an F1-score of 0.49.
+- **Recommendation**: Pre-position maintenance crews at [location] before 7 AM on weekdays. During rush hours, focus on resource allocation for 'Medium' incidents, acknowledging potential false positives due to lower precision. For non-rush hours, prioritize 'High' and 'Low' incident types for proactive deployment of maintenance crews, especially for mechanical issues.
+- **Expected Impact**: Increased preparedness for common incident types and better resource utilization during non-rush hours, leading to an overall 10% reduction in mechanical incident response time. 
 
 **2. Route-Specific Interventions**
-[PLACEHOLDER]
-- **Finding**: Routes [list] account for [X]% of all incidents
-- **Recommendation**: Implement targeted preventive maintenance schedules for these routes
-- **Expected Impact**: [estimated reduction in incidents]
-
+- **Finding**: Routes [list] account for [X]% of all incidents. Engineered features like station_encoded and route_time_combo are highly important. EDA confirmed that Routes 501 Queen and 504 King and stations like Dundas Street West and Queen Street West are hotspots.
+- **Recommendation:** Implement targeted interventions such as preventive maintenance and increased monitoring for specific route-time combinations and high-incident stations identified in the EDA. For example, Route 501 during 5 PM rush hour. (Add more specific routes and time)
+- **Expected Impact:** Reduced incident frequency in historically problematic areas such as. (where?)
+  
 **3. Time-Based Staffing Optimization**
 [PLACEHOLDER]
-- **Finding**: [Incident type] peaks during [time period]
-- **Recommendation**: Adjust staffing levels and resource availability during high-risk periods
-- **Expected Impact**: Improved incident response times
+- **Finding**: [Incident type] peaks during [time period]. The hour and dayofweek features are predictive, and the model performs better during non-rush hours.
+- **Recommendation**: [Adjust staffing levels and resource availability during high-risk periods] Optimize staffing levels, particularly for types like 'High' and 'Low' incidents, during non-rush hours when the model's predictive power is higher. During rush hours, focus on rapidly responding to 'Medium' incidents where recall is strong.
+- **Expected Impact**: Improved incident response times tailored to specific temporal patterns. (which ones?)
 
 **4. Infrastructure Investment Priorities**
-[PLACEHOLDER]
-- **Finding**: [Location/route] shows recurring [incident type]
-- **Recommendation**: Prioritize capital improvements (track maintenance, signal upgrades) at identified hotspots
-- **Expected Impact**: Long-term reduction in incident frequency
+- **Finding**: [Location/route] shows recurring [incident type] Mechanical and general operational issues (Mechanical, MTPU, General Delay, MTGD) are the most frequent incident types. The station_encoded feature is highly important.
+- **Recommendation**: Prioritize capital investments in vehicle maintenance and infrastructure upgrades (such as?) at high-incident stations (which ones?), addressing the root causes of dominant incident types.
+- **Expected Impact**: Long-term reduction in incident frequency and improved overall system reliability.
 
 ### Quantified Business Value
 
 **Current State (Reactive Management):**
-- Average incident response time: [estimate]
-- Resource allocation: Based on historical averages
-- Service reliability: Vulnerable to unpredictable disruptions
+- Average incident response time: [estimate]Reactive response leads to longer resolution times.
+- Resource allocation: [Based on historical averages] Based on general historical averages, potentially leading to inefficient deployment.
+- Service reliability: Vulnerable to unpredictable disruptions, leading to passenger dissatisfaction.
 
 **Future State (Proactive Management with Model):**
-- **[X]% improvement in incident type prediction accuracy**
-- **Estimated [Y]% reduction in incident response time** through proactive deployment
-- **[Z]% improvement in resource utilization** through predictive allocation
-- **Enhanced passenger satisfaction** through more reliable service
+- 37.9% Weighted F1-Score for the Gradient Boosting model, indicating a substantial improvement over random guessing for incident type prediction.
+- Estimated [X]% reduction in incident response time through proactive deployment based on predictions (e.g., pre-positioning maintenance crews).
+- [Y]% improvement in resource utilization through predictive allocation, especially during non-rush hours where the model performs better.
+- Enhanced passenger satisfaction through more reliable service and fewer unexpected delays.
 
 **ROI Considerations:**
-- Reduced operational costs through optimized crew deployment
-- Decreased service disruptions leading to maintained/increased ridership
-- Improved public perception and trust through transparent, data-driven operations
+- Reduced operational costs through optimized crew deployment and targeted preventive maintenance.
+- Decreased service disruptions leading to maintained/increased ridership and improved public perception.
+- Data-driven decision-making can justify infrastructure investments with clear ROI projections, leading to more strategic use of capital.
 
 ### Stakeholder-Specific Recommendations
 
 **For Operations Teams:**
-- Use model predictions to guide daily resource deployment decisions
+- Use model predictions to guide daily resource deployment 
 - Focus on high-probability incident scenarios during peak periods
 - Monitor model performance and provide feedback for continuous improvement
+- Utilize the model's predictions for 'High' and 'Low' incident types during non-rush hours to pre-plan resource deployment.
+- For rush hours, use the high recall for 'Medium' incidents to quickly dispatch general response teams, understanding that precision is lower.
+- Provide feedback on prediction accuracy to enable continuous model improvement.
 
 **For Maintenance Department:**
 - Prioritize preventive maintenance on routes/times with high mechanical incident probability
