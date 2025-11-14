@@ -683,26 +683,26 @@ Virtual environment for dependency management
 
 **File Structure:**
 ttc-incident-classification/
-├── data/
-│   ├── raw/                    # Original 12 data files
-│   └── processed/              # Consolidated and processed data
-├── experiments/                # Jupyter notebooks
-│   ├── 01_eda.ipynb
-│   └── 02_modeling.ipynb
-├── models/                     # Trained model files
-├── reports/
-│   ├── charts/               # All visualizations
-│   └── model_comparison.csv   # Model performance tracking
-├── src/                       # Source code
-├── docs/                      # Documentation
-├── requirements.txt           # Python dependencies
+├── data/ <br>
+│   ├── raw/                    # Original 12 data files <br>
+│   └── processed/              # Consolidated and processed data<br>
+├── experiments/                # Jupyter notebooks <br>
+│   ├── 01_eda.ipynb <br>
+│   └── 02_modeling.ipynb <br>
+├── models/                     # Trained model files <br>
+├── reports/ <br>
+│   ├── charts/               # All visualizations <br>
+│   └── model_comparison.csv   # Model performance tracking <br>
+├── src/                       # Source code <br>
+├── docs/                      # Documentation <br>
+├── requirements.txt           # Python dependencies <br>
 └── README.md                  # This file
 
 ________________________________________
 ## XII. References
 ### Data Source
 Toronto Transit Commission (TTC) Service Delay Data, 2014-2024
-[Add specific data source URL if available]
+https://open.toronto.ca/dataset/ttc-streetcar-delay-data/
 ### Technical Resources
 - scikit-learn documentation: https://scikit-learn.org/
 ### Related Work
