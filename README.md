@@ -9,8 +9,8 @@ The Toronto Transit Commission (TTC) manages thousands of service incidents annu
 
 **Deliverable**: A reproducible classification model with actionable insights for operational improvements, supported by the analysis of 11+ years of incident data.
 
-**Key Results:** [PLACEHOLDER - Member 3 to provide]
-- Final model achieves 37.9% Weighted F1-Score in classifying incident types (using Gradient Boosting for non-rush hours).
+**Key Results:** 
+- Final model (Gradient Boosting) achieves 37.9% Weighted F1-Score in classifying incident types for non-rush hours.
 - 29% accuracy during rush hours and 40% accuracy during non-rush hours for Gradient Boosting.
 - Model shows potential for predicting 'High' and 'Low' incident types during non-rush hours with F1-scores of 0.49 and 0.44 respectively.
 - Model excels at predicting [top incident types]
@@ -141,7 +141,6 @@ Based on the consolidated dataset, our data includes:
 
 **Data Quality Issues:** [PLACEHOLDER - From Member 1 & Member 2]
 - Missing values:  time (6), bound (2280), vehicle (4649), and hour (6) had missing values.
-- Duplicates: [count/handling]???
 **Data cleaning steps:**
 - Numeric columns (vehicle, hour): Missing values were filled with 0.
 - Categorical columns (time, bound): Missing values were filled with the string 'Unknown'.
@@ -230,6 +229,10 @@ Our analysis followed a structured, milestone-driven approach moving from data c
 - is_morning_rush: Boolean flag for 7-9 AM (Derived from hour).
 - is_evening_rush: Boolean flag for 4-6 PM (Derived from hour).
 
+**Delay-Related Features:**
+- delay_bin: Categorical feature created by binning min_delay into 'Low' (0-5 min), 'Medium' (5-15 min), 'High' (15-30 min), and 'Severe' (>30 min).
+- gap_ratio: Calculated as min_gap / (min_delay + 1).
+
 **Categorical Encoding:**
 - line_encoded: Numerical representation of line.
 - station_encoded: Numerical representation of station.
@@ -249,8 +252,6 @@ Our analysis followed a structured, milestone-driven approach moving from data c
 ### Phase 4: Model Development & Optimization
 
 **Objective:** Train and optimize classification models to predict incident types
-
-[PLACEHOLDER - Most of this section comes from Member 3]
 
 **Models Tested:**
 
@@ -458,54 +459,50 @@ Based on our model's performance and feature importance analysis, TTC can implem
 ### Current Limitations
 
 **Model Limitations:**
-[PLACEHOLDER - From Member 3]
-1. [Limitation 1 - e.g., lower performance on minority classes]
-2. [Limitation 2 - e.g., cannot predict novel incident types]
-3. [Limitation 3 - e.g., performance degrades in extreme weather]
+1. Limited Predictive Accuracy: The overall Weighted F1-Score of 0.379 suggests that while the model provides insights, there's significant room for improvement in predictive accuracy, especially for minority classes and during rush hours
+2. Struggles with 'Severe' Incidents (Rush Hour): The very low F1-score for 'Severe' incidents during rush hours (0.02) is a critical limitation, as these are high-impact events the model needs to predict effectively.
+3. Class Imbalance Impact: Despite efforts, class imbalance likely still affects the model's ability to generalize to less frequent incident types, as seen in the varied per-class performance.
 
 **Data Limitations:**
 1. **Historical Data Only**: Model trained on past incidents; unprecedented event types may not be predicted accurately
-2. **Missing External Factors**: Weather data, special events, construction activity not included in current model
-3. **Limited Geographic Detail**: Location data may not capture micro-level factors (e.g., specific track conditions)
-4. **Temporal Scope**: 2014-2024 data may not reflect future operational changes or system upgrades
+2. **Missing External Factors**: The current model does not include crucial external factors such as weather data, special events, or construction activity, which are known to influence transit delays.
+3. **Limited Geographic Detail**:  While station and route information is available, more granular geographic data (e.g., specific intersections, track segments) could provide deeper insights.
+4. **Temporal Scope**: The 2014-2025 data, while extensive, may not fully capture very recent changes in operational procedures or system upgrades.
 
 **Operational Limitations:**
-1. **Real-Time Deployment**: Current model requires batch processing; real-time prediction infrastructure needed for operational use
-2. **Human Oversight Required**: Model should augment, not replace, human decision-making
-3. **Model Drift**: Performance may degrade over time as operational patterns change
+1. **Real-Time Deployment**: The current model is a proof-of-concept; operationalization requires integrating it into TTC's real-time systems for immediate predictive insights.
+2. **Human Oversight Required**: The model is a decision-support tool and should augment, not replace, the expertise and judgment of human operators and managers.
+3. **Model Drift**:  Operational environments evolve; the model will require continuous monitoring, retraining, and updating to maintain its effectiveness over time.
 
 ### Future Improvements
 
 **With Additional Time/Resources:**
 
 1. **Enhanced Feature Engineering:**
-   - Integrate weather data (temperature, precipitation, extreme conditions)
-   - Include special events calendar (sports games, concerts, holidays)
-   - Add construction/maintenance schedules
-   - Incorporate real-time traffic data
+   - Integrate weather data (temperature, precipitation, extreme conditions) to capture environmental impacts.
+   - Include special events calendars (e.g., sports games, concerts, holidays) to account for demand surges.
+   - Incorporate construction and maintenance schedules that might pre-emptively cause delays or affect routes.
+   - Add real-time traffic data to better predict external factors affecting streetcar movement.
 
 2. **Advanced Modeling Techniques:**
-   - Ensemble methods combining multiple models
-   - Deep learning approaches (LSTM for temporal patterns)
-   - Route-specific models for high-incident corridors
-   - Real-time prediction system with continuous learning
+   - Explore ensemble methods (e.g., stacking, boosting with more diverse base learners) to improve overall predictive power.
+   - Investigate deep learning approaches (e.g., LSTMs for time-series patterns) for potentially uncovering more complex temporal dependencies.
+   - Develop route-specific or location-specific models for highly localized incident prediction.
+   - Implement active learning strategies to continually refine the model with new, incoming data.
 
 3. **Expanded Scope:**
-   - Include subway and bus incidents for system-wide prediction
-   - Predict incident severity/duration in addition to type
-   - Develop incident prevention recommendations (not just classification)
-   - Create early warning system for cascading delays
+   - Expand the prediction to include incident severity and duration, not just type, to allow for more comprehensive operational planning.
+   - Include data from other transit modes (subway, buses) for a holistic view of the entire transit network.
+   - Develop prescriptive analytics that suggest specific mitigation strategies based on predicted incident types.
 
 4. **Operational Integration:**
-   - Deploy model into TTC's operational systems
-   - Develop user-friendly dashboard for operations staff
-   - Implement feedback loop for continuous model improvement
-   - Establish monitoring system for model performance drift
+   - Develop a user-friendly dashboard for operations staff to visualize predictions and key insights in real-time.
+   - Establish a robust feedback loop for operational staff to report on prediction accuracy and outcomes, informing model retraining.
+   - Implement a continuous monitoring system to detect model performance degradation or drift.
 
 5. **External Validation:**
-   - Test model on other transit systems
-   - Collaborate with TTC to validate real-world impact
-   - Conduct A/B testing: proactive (model-guided) vs reactive management
+   - Conduct A/B testing in collaboration with TTC: compare outcomes of proactive, model-guided management against reactive approaches.
+   - Validate the model's generalizability by testing it on incident data from other transit systems.
 
 ---
 
