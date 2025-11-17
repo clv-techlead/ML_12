@@ -717,15 +717,15 @@ Git/GitHub for version control and collaboration
 Virtual environment for dependency management
 
 **File Structure:**
-ttc-incident-classification/
+ML_12/ <br>
 ├── data/ <br>
 │   ├── raw/                    # Original 12 data files <br>
 │   └── processed/              # Consolidated and processed data<br>
-├── models/                     # modeling materials <br>
+├── models/                     # modeling code & files <br>
 ├── reports/ <br>
 │   ├── charts/               # All visualizations <br>
 │   └── presentation/          # Showcase materials <br>
-├── src/                       # Source code <br>
+├── src/                       # py source code <br>
 ├── docs/                      # Documentation <br>
 ├── requirements.txt           # Python dependencies <br>
 └── README.md                  # This file
@@ -742,7 +742,7 @@ ________________________________________
 ## XIII. Acknowledgments
 We thank the Toronto Transit Commission for making this data publicly available, enabling data-driven analysis to improve public transit operations.
 ________________________________________
-Project Timeline: Nov. 4 - 15, 2025
+Project Timeline: Nov. 4th - 15th, 2025
 ---
 
 <br>
