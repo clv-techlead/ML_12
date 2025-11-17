@@ -1,3 +1,5 @@
+# SRC README
+
 This folder was created for modular scripts, but ultimately was not used as all analysis work was done in Jupyter Notebooks
 
 **Data consolidation:** data/model.ipynb
