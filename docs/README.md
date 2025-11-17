@@ -1,1 +1,2 @@
 README for docs
+This folder contains detailed information about each team member’s contributions to the project. For detailed information please refer to the files evaluation_framework, file_consolidation_review, reproducibility_instructions, teammember1_data_consolidation_notes, teammember2_eda_notes, teammember3_model_notes.
