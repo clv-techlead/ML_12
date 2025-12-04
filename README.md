@@ -7,7 +7,7 @@
 
 The Toronto Transit Commission (TTC) manages thousands of service incidents annually, each causing delays that impact operations, costs, and passenger satisfaction. This project develops a machine learning classification model to classify streetcar incident severity levels based on historical data (2014-2024), enabling TTC to shift from reactive incident management to proactive operational planning and improve service reliability for Toronto's transit riders.
 
-**Deliverable**: A reproducible classification model with actionable insights for operational improvements, supported by the analysis of 11+ years of incident data. An interactive dashboard has been included to further support operational decision-making.
+**Deliverable**: A reproducible classification model with actionable insights for operational improvements, supported by the analysis of 11+ years of incident data. An interactive dashboard, included in the Business Impact & Recommendations section, provides additional support for operational decision-making.
 
 **Key Results:** 
 - Final model (Gradient Boosting) achieves 37.9% Weighted F1-Score in classifying incident types for non-rush hours.
