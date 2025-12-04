@@ -28,7 +28,7 @@ The Toronto Transit Commission (TTC) manages thousands of service incidents annu
 1. [Business Motivation](#i-business-motivation)
 2. [Research Question](#ii-research-question)
 3. [Dataset](#iii-dataset)
-4. [Risk & Limitations](#iv-risk--limitations)
+4. [Risks & Limitations](#iv-risks--limitations)
 5. [Methodology](#v-methodology)
 6. [Results](#vi-results)
 7. [Business Impact & Recommendations](#vii-business-impact--recommendations)
@@ -431,7 +431,7 @@ Analyzing the misclassification patterns of the Gradient Boosting model during n
 
 ## VII. Business Impact & Recommendations 
 
-### Operational Improvements Enabled ([View Interactive Dashboard](https://ttc-streetcar-performance-analysis-ngwammt9iwtqkix7bo3vte.streamlit.app/))
+### Operational Improvements Enabled [(View Interactive Dashboard)](https://ttc-streetcar-performance-analysis-ngwammt9iwtqkix7bo3vte.streamlit.app/)
 
 Based on our model's performance and feature importance analysis, TTC can implement the following data-driven improvements:
 
