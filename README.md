@@ -25,16 +25,19 @@ The Toronto Transit Commission (TTC) manages thousands of service incidents annu
 <br>
 
 ## Table of Contents
-1. [Business Motivation](#business-motivation)
-2. [Research Question](#research-question)
-3. [Dataset](#dataset)
-4. [Methodology](#methodology)
-5. [Results](#results)
-6. [Business Impact & Recommendations](#business-impact--recommendations)
-7. [Limitations & Future Work](#limitations--future-work)
-8. [Reproducibility](#reproducibility)
-9. [Team & Collaboration](#team--collaboration)
-10. [References](#references)
+1. [Business Motivation](#i-business-motivation)
+2. [Research Question](#ii-research-question)
+3. [Dataset](#iii-dataset)
+4. [Risk & Limitations](#iv-risk--limitations)
+5. [Methodology](#v-methodology)
+6. [Results](#vi-results)
+7. [Business Impact & Recommendations](#vii-business-impact--recommendations)
+8. [Limitations & Future Work](#viii-limitations--future-work)
+9. [Reproducibility](#ix-reproducibility)
+10. [Team & Collaboration](#x-team--collaboration)
+11. [Technologies & Tools](#xi-technologies--tools)
+12. [References](#xii-references)
+13. [Acknowledgements](xiii-acknowledgements)
 
 ---
 
@@ -426,9 +429,9 @@ Analyzing the misclassification patterns of the Gradient Boosting model during n
 
 ---
 
-## VII. Business Impact & Recommendations
+## VII. Business Impact & Recommendations 
 
-### Operational Improvements Enabled
+### Operational Improvements Enabled ([View Interactive Dashboard](https://ttc-streetcar-performance-analysis-ngwammt9iwtqkix7bo3vte.streamlit.app/))
 
 Based on our model's performance and feature importance analysis, TTC can implement the following data-driven improvements:
 
@@ -739,7 +742,7 @@ https://open.toronto.ca/dataset/ttc-streetcar-delay-data/
 - scikit-learn documentation: https://scikit-learn.org/
 ### Related Work
 ________________________________________
-## XIII. Acknowledgments
+## XIII. Acknowledgements
 We thank the Toronto Transit Commission for making this data publicly available, enabling data-driven analysis to improve public transit operations.
 ________________________________________
 Project Timeline: Nov. 4th - 15th, 2025
